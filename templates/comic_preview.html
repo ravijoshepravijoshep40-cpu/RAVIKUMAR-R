@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comic Preview — ComicCraft</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <main class="container wide">
+    <header class="page-header">
+      <div>
+        <div class="badge">YOUR AI-GENERATED COMIC</div>
+        <h1>{{ character_name }}'s <span>Comic</span></h1>
+        <p>Review each panel, then download the complete comic as a PDF.</p>
+      </div>
+      <a class="secondary-btn" href="/">← New Comic</a>
+    </header>
+
+    <div class="actions">
+      <a class="primary-btn" href="{{ pdf_path }}" download>⬇ Download Your Comic as PDF</a>
+    </div>
+
+    <section class="comic-grid">
+      {% for panel in layout %}
+      <article class="panel-card">
+        <div class="panel-title">
+          <span>Panel {{ panel.panel_number }}</span>
+          <h2>{{ panel.title }}</h2>
+        </div>
+        <img src="{{ panel.image_path }}" alt="Panel {{ panel.panel_number }} illustration">
+        <div class="panel-body">
+          <p class="scene"><em>{{ panel.scene_description }}</em></p>
+          <p><b>Caption:</b> {{ panel.caption }}</p>
+          <p><b>Narration:</b> {{ panel.narration }}</p>
+          <p><b>Dialogue:</b> {{ panel.dialogue }}</p>
+          <details>
+            <summary>Image Prompt Reference</summary>
+            <p class="prompt">{{ panel.image_prompt }}</p>
+          </details>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <div class="bottom-cta">
+      <a class="primary-btn" href="{{ pdf_path }}" download>📕 Download PDF</a>
+      <a class="secondary-btn" href="/export-success?pdf_path={{ pdf_path | urlencode }}">Continue</a>
+    </div>
+  </main>
+</body>
+</html>
